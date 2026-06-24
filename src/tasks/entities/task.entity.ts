@@ -17,6 +17,9 @@ export class Task {
   @Column()
   description: string;
 
+  @Column({ default: false })
+  isTaskDoneStatus: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 
