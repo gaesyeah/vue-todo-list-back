@@ -9,14 +9,17 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
-      type: 'better-sqlite3',
-      database: 'db.sqlite',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      //TODO alterar em prod, ou seja, quando eu trocar o sqlite pelo postgres
+      type: 'postgres',
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      autoLoadEntities: true,
       synchronize: true,
     }),
-    ConfigModule.forRoot({ isGlobal: true }),
     TasksModule,
     AuthModule,
     UsersModule,
